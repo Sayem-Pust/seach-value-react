@@ -4,11 +4,26 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import thunkMiddleware from "redux-thunk";
+import {Provider} from 'react-redux'
+import {createStore, applyMiddleware, combineReducers, compose} from 'redux'
+import {authReducer} from './redux/auth/reducers'
+import {requestSearch} from './redux/search/reducer'
+import {requestTask} from './redux/task/reducers'
+
+const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const rootReducer = combineReducers({requestSearch, authReducer, requestTask})                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+const store = createStore(
+  rootReducer,
+  composeEnhances(applyMiddleware(thunkMiddleware)
+));
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
